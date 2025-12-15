@@ -1,6 +1,7 @@
 # Short Responses
 
 For this short response assignment, aim to write a response with the following qualities (your instructor will give you feedback on these areas):
+
 - [] Addresses all parts of the prompt
 - [] Accurately uses relevant technical terminology
 - [] Is free of grammar and spelling mistakes (double check with grammarly!)
@@ -26,14 +27,16 @@ Part B: How would you modify the code so that reassigning `playlist2.songCount` 
 
 ### Response 1
 
-Your response...
+Part A: The console will log 15. This happens because objects in JavaScript are assigned by reference, so playlist2 points to the same object in memory as playlist1. When playlist2.songCount is updated, it mutates the shared object, affecting playlist1.songCount as well.
+
+Part B:To prevent this, you must create a shallow copy of the object so that playlist2 references a different object in memory. This can be done using the spread operator.
 
 **Corrected Code:**
 
 ```js
 // fix this!
 const playlist1 = { name: "My Favorites", songCount: 10 };
-const playlist2 = playlist1;
+const playlist2 = { ...playlist1 };
 playlist2.songCount = 15;
 console.log(playlist1.songCount);
 ```
@@ -47,7 +50,7 @@ const students = [
   { name: "Maya", grade: 92, passed: true },
   { name: "Jamal", grade: 78, passed: true },
   { name: "Destiny", grade: 88, passed: true },
-  { name: "Marcus", grade: 95, passed: true }
+  { name: "Marcus", grade: 95, passed: true },
 ];
 ```
 
@@ -60,7 +63,10 @@ For each task below, identify which array method (forEach, filter, map, find, or
 
 ### Response 2
 
-Your response...
+1. filter —> This method is used to return a new array containing only students whose grade is above 85.
+2. find —> This method locates the student object with the name "Destiny", allowing you to directly update their grade property.
+3. reduce —> This method aggregates all student grades into a single total, which can then be divided to compute the average.
+4. map —> This method transforms each student object into a formatted string like "Maya: 92".
 
 ---
 
@@ -71,7 +77,7 @@ We should expect that the code below prints the array `[ 'A', 'B', 'C', 'D' ]` b
 Explain why this error occurs, how to fix it, and provide a suggestion for how to avoid this error in the future.
 
 ```js
-const letters = ['a', 'b', 'c', 'd'];
+const letters = ["a", "b", "c", "d"];
 const capitalize = (str) => str.toUpperCase();
 
 const upperCaseLetters = letters.map(capitalize());
@@ -82,7 +88,9 @@ console.log(upperCaseLetters);
 
 ### Response 3
 
-Your response...
+The error occurs because capitalize() is being invoked immediately, instead of being passed as a callback function to map. Since no argument is provided when capitalize() is called, str is undefined, and calling .toUpperCase() on undefined throws a TypeError.
+
+You should pass the function reference to map, allowing map to call it for each element in the array.
 
 ---
 
@@ -94,7 +102,7 @@ Given this code:
 const orders = [
   { id: 1, total: 45 },
   { id: 2, total: 23 },
-  { id: 3, total: 67 }
+  { id: 3, total: 67 },
 ];
 
 const grandTotal = orders.reduce((sum, order) => {
@@ -105,10 +113,16 @@ const grandTotal = orders.reduce((sum, order) => {
 - Part A: What will `grandTotal` equal after this code runs?
 - Part B: Explain what the `0` at the end of the reduce method does. Why is it important?
 - Part C: Walk through what happens in the FIRST iteration of reduce:
-    - What is the value of sum?
-    - What is the value of order?
-    - What gets returned?
+  - What is the value of sum?
+  - What is the value of order?
+  - What gets returned?
 
 ### Response 4
 
-Your response...
+Part A: grandTotal will equal 135, which is the sum of all total values in the orders array (45 + 23 + 67).
+
+Part B: The 0 is the initial accumulator value for sum. It ensures that the reduction starts from a known number and prevents unexpected behavior, especially if the array is empty or contains non-numeric values.
+
+Part C: sum starts at 0 because it is the initial value passed to reduce.
+order is the first object in the array: { id: 1, total: 45 }.
+The callback returns 45, which becomes the new value of sum for the next iteration.
